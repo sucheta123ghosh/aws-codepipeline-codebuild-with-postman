@@ -1,0 +1,13 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - cd 01api
+      - aws cloudformation package --template-file datalake-api.yaml
+                                   --s3-bucket suchetarootmetrics
+                                   --s3-prefix api-code
+                                   --output-template-file datalake-api-output.yaml
+artifacts:
+  type: zip
+  files:
+    - 01api/datalake-api-output.yaml
