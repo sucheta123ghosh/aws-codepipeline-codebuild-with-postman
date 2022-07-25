@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "847aec82-5dea-4e89-ae46-4febfb2176a6",
+		"name": "LML DATA TEST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20054338"
+	},
+	"item": [
+		{
+			"name": "DC_URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"bodydata = JSON.parse(responseBody)\r",
+							"jobid_value = bodydata.job_id\r",
+							"console.log(jobid_value)\r",
+							"\r",
+							"pm.environment.set(\"job_id\", jobid_value);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "c58c489e-e3ea-4a1f-9c34-5a12c9507052",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"market\": \"Switzerland, CH\",\r\n    \"period\": \"1H-2022\",\r\n    \"carrier\": [\r\n      \"Salt\",\r\n      \"Swisscom\",\r\n      \"Sunrise\"\r\n    ]\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sryhwdjocf.execute-api.us-east-2.amazonaws.com/qa/data_collection/",
+					"protocol": "https",
+					"host": [
+						"sryhwdjocf",
+						"execute-api",
+						"us-east-2",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"qa",
+						"data_collection",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DC_ID_URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();\r",
+							"\r",
+							"if (response.status === \"INPROGRESS\"){\r",
+							"    setTimeout(() => {}, 5000);\r",
+							"    postman.setNextRequest(pm.info.requestId);\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Validate if substatus is content ready\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.substatus).to.eql(\"CONTENT_READY\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "c58c489e-e3ea-4a1f-9c34-5a12c9507052",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://sryhwdjocf.execute-api.us-east-2.amazonaws.com/qa/data_collection/{{job_id}}",
+					"protocol": "https",
+					"host": [
+						"sryhwdjocf",
+						"execute-api",
+						"us-east-2",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"qa",
+						"data_collection",
+						"{{job_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "contenturl",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Is valid response with json object in body\", function () {\r",
+							"    \r",
+							"    // assert that the status code is 200\r",
+							"    pm.response.to.be.ok; // info, success, redirection, clientError,  serverError, are other variants\r",
+							"     \r",
+							"    // assert that the response has a valid JSON body\r",
+							"    pm.response.to.be.withBody;\r",
+							"     \r",
+							"    pm.response.to.be.json; // this assertion also checks if a body  exists, so the above check is not needed\r",
+							"     \r",
+							"    //make sure we have a valid json array\r",
+							"    pm.expect(pm.response.json()).to.be.an('object').but.not.an('array');\r",
+							"    \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "c58c489e-e3ea-4a1f-9c34-5a12c9507052",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"job_id\": \"{{job_id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sryhwdjocf.execute-api.us-east-2.amazonaws.com/qa/data_collection/content_url",
+					"protocol": "https",
+					"host": [
+						"sryhwdjocf",
+						"execute-api",
+						"us-east-2",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"qa",
+						"data_collection",
+						"content_url"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
