@@ -10,4 +10,4 @@ phases:
 artifacts:
   type: zip
   files:
-    - 01api/datalake-api-output.yaml
+    - 01api/petstore-api-output.yaml
