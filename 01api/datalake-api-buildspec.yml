@@ -6,7 +6,7 @@ phases:
       - aws cloudformation package --template-file datalake-api.yaml
                                    --s3-bucket rm-test1
                                    --s3-prefix api-code
-                                   --output-template-file datalake-api-output.yaml
+                                   --output-template-file petstore-api-output.yaml
 artifacts:
   type: zip
   files:
