@@ -307,7 +307,7 @@ Resources:
             TemplatePath: !Join
             - ''
             - - 'PetStoreAPI-BuildArtifact'
-              - '::01api/datalake-api-output.yaml'
+              - '::01api/petstore-api-output.yaml'
             ActionMode: CHANGE_SET_REPLACE
             Capabilities: CAPABILITY_IAM
             ChangeSetName: pipeline-changeset
