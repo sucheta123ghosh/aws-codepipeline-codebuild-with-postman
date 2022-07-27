@@ -13,4 +13,4 @@ Outputs:
       Description: "Root API endpoint URL for Prod stage"
       Value: !Sub "https://${PetStoreAPI}.execute-api.${AWS::Region}.amazonaws.com/prod"
       Export:
-        Name: PetStoreAPIRoot3
+        Name: PetStoreAPIRoot101
